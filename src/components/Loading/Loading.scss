@@ -1,10 +1,13 @@
+@import "../../styles/mixin";
+@import "../../styles/color";
+
 .loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center;
   flex-direction: column;
+
   font-size: 40px;
-  color: #74d39c;
+  color: $primary-color;
+  min-height: 500px;
 
   &.loading--small {
     font-size: 30px;

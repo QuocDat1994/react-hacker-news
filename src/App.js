@@ -57,7 +57,7 @@ class App extends React.Component {
       page: page,
       isLoading: false,
       isLoadingMore: false,
-      noMoreResult: response.data.hits.length === 0
+      noMoreResult: response.data.hits.length === 0 || filteredList.length === 0
     });
   };
 

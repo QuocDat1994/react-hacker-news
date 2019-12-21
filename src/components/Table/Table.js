@@ -3,6 +3,7 @@ import "./Table.scss";
 
 import TableHeaderItem from "./TableHeaderItem";
 import TableBodyItem from "./TableBodyItem";
+import TableEmpty from "./TableEmpty";
 
 export default class Table extends React.Component {
   handleSort = key => {
@@ -14,6 +15,9 @@ export default class Table extends React.Component {
   };
 
   render() {
+    if (this.props.list.length === 0) {
+      return <TableEmpty />;
+    }
     return (
       <table className="table">
         <thead>
