@@ -14,21 +14,10 @@
           transition: 0.3s ease-in-out;
         }
 
-        &.sortDown {
-          svg {
-            top: 45%;
-          }
-        }
-
-        &.sortUp {
-          svg {
-            top: 25%;
-          }
-        }
-
         svg {
           position: absolute;
           margin-left: 5px;
+          top: 35%;
         }
 
         &:last-child {

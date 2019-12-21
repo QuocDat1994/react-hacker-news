@@ -4,11 +4,11 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import "./Loading.scss";
 
-const Loading = () => {
+const Loading = props => {
   return (
-    <div className="loading">
+    <div className={`loading ${props.isLoadingMore && "loading--small"}`}>
       <FontAwesomeIcon icon={faSpinner} spin />
-      <div>Now Loading...</div>
+      <div className="loading__text">Now Loading...</div>
     </div>
   );
 };

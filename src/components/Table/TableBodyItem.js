@@ -11,7 +11,12 @@ export default class TableBodyItem extends React.Component {
     return (
       <tr>
         <td>
-          <a className="title" href={data.url} target="_blank">
+          <a
+            className="title"
+            href={data.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {data.title}
           </a>
           <div className="author">by {data.author}</div>

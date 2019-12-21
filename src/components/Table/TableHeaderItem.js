@@ -7,25 +7,13 @@ export default class TableHeaderItem extends React.Component {
     this.props.onClick(this.props.text.toUpperCase());
   };
 
-  getSortClass = () => {
-    const { text, sortKey } = this.props;
-
-    if (sortKey === text.toUpperCase()) {
-      return "sortUp";
-    } else if (sortKey === `${text.toUpperCase()}_DESC`) {
-      return "sortDown";
-    }
-    return "";
-  };
-
   render() {
+    const { sortKey, text } = this.props;
     return (
-      <th onClick={this.handleClick} className={this.getSortClass}>
-        {this.props.text}
-        {this.getSortClass() === "sortUp" && (
-          <FontAwesomeIcon icon={faSortUp} />
-        )}
-        {this.getSortClass() === "sortDown" && (
+      <th onClick={this.handleClick}>
+        {text}
+        {sortKey === text.toUpperCase() && <FontAwesomeIcon icon={faSortUp} />}
+        {sortKey === `${text.toUpperCase()}_DESC` && (
           <FontAwesomeIcon icon={faSortDown} />
         )}
       </th>

@@ -29,26 +29,37 @@ class App extends React.Component {
       sortKey: "POINTS_DESC",
       page: 0,
       limit: 20,
-      isLoading: false
+      isLoading: false,
+      isLoadingMore: false,
+      noMoreResult: false
     };
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchData(0);
   }
 
-  fetchData = async () => {
-    const { searchTerm, page, limit } = this.state;
+  fetchData = async page => {
+    const { searchTerm, limit } = this.state;
     const url = `https://hn.algolia.com/api/v1/search?query=${searchTerm}&page=${page}&hitsPerPage=${limit}`;
 
-    this.setState({ isLoading: true });
+    this.setState({
+      isLoading: page === 0,
+      isLoadingMore: page !== 0
+    });
 
     const response = await axios.get(url);
-    const filteredList = response.data.hits.filter(
+    const filteredList = [...this.state.list, ...response.data.hits].filter(
       data => Boolean(data.title) && Boolean(data.url)
     );
 
-    this.setState({ list: filteredList, isLoading: false });
+    this.setState({
+      list: filteredList,
+      page: page,
+      isLoading: false,
+      isLoadingMore: false,
+      noMoreResult: response.data.hits.length === 0
+    });
   };
 
   onSearchChange = event => {
@@ -57,7 +68,8 @@ class App extends React.Component {
 
   onSearchSubmit = event => {
     event.preventDefault();
-    this.fetchData();
+    this.setState({ list: [] });
+    this.fetchData(0);
   };
 
   onSortChange = key => {
@@ -66,6 +78,10 @@ class App extends React.Component {
     } else {
       this.setState({ sortKey: key });
     }
+  };
+
+  onLoadMore = () => {
+    this.fetchData(this.state.page + 1);
   };
 
   onDismiss = id => {
@@ -97,9 +113,15 @@ class App extends React.Component {
             />
           )}
         </div>
-        <div className="app__footer">
-          <button className="button__more">More</button>
-        </div>
+        {!this.state.isLoading && (
+          <div className="app__footer">
+            {this.state.isLoadingMore ? (
+              <Loading isLoadingMore={true} />
+            ) : (
+              <button onClick={this.onLoadMore}>More</button>
+            )}
+          </div>
+        )}
       </div>
     );
   }
