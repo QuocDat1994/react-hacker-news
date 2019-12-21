@@ -28,7 +28,6 @@ class App extends React.Component {
       searchTerm: "",
       sortKey: "POINTS_DESC",
       page: 0,
-      limit: 20,
       isLoading: false,
       isLoadingMore: false,
       noMoreResult: false
@@ -40,8 +39,8 @@ class App extends React.Component {
   }
 
   fetchData = async page => {
-    const { searchTerm, limit } = this.state;
-    const url = `https://hn.algolia.com/api/v1/search?query=${searchTerm}&page=${page}&hitsPerPage=${limit}`;
+    const { searchTerm } = this.state;
+    const url = `https://hn.algolia.com/api/v1/search?query=${searchTerm}&page=${page}&hitsPerPage=20`;
 
     this.setState({
       isLoading: page === 0,
@@ -90,6 +89,7 @@ class App extends React.Component {
   };
 
   render() {
+    const { isLoading, isLoadingMore, noMoreResult } = this.state;
     return (
       <div className="app">
         <div className="app__header">
@@ -101,27 +101,23 @@ class App extends React.Component {
           />
         </div>
         <div className="app__body">
-          {this.state.isLoading ? (
-            <Loading />
-          ) : (
+          {isLoading && <Loading />}
+          {!isLoading && (
             <Table
               list={SORTS[this.state.sortKey](this.state.list)}
               onSortChange={this.onSortChange}
               onDismiss={this.onDismiss}
-              isLoading={this.state.isLoading}
+              isLoading={isLoading}
               sortKey={this.state.sortKey}
             />
           )}
         </div>
-        {!this.state.isLoading && (
-          <div className="app__footer">
-            {this.state.isLoadingMore ? (
-              <Loading isLoadingMore={true} />
-            ) : (
-              <button onClick={this.onLoadMore}>More</button>
-            )}
-          </div>
-        )}
+        <div className="app__footer">
+          {isLoadingMore && <Loading isLoadingMore={true} />}
+          {!isLoadingMore && !isLoading && !noMoreResult && (
+            <button onClick={this.onLoadMore}>More</button>
+          )}
+        </div>
       </div>
     );
   }
