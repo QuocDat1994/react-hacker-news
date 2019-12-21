@@ -11,6 +11,7 @@
 
   &.loading--small {
     font-size: 30px;
+    min-height: fit-content;
 
     .loading__text {
       display: none;
