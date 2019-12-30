@@ -40,7 +40,7 @@ describe("Table", () => {
 
   it("should render table with data", () => {
     const wrapper = mount(<Table list={data} />);
-    expect(wrapper.find(".table").length).toBe(1);
+    expect(wrapper.find("tbody tr").length).toBe(3);
   });
 
   it("should render empty table", () => {
@@ -50,6 +50,6 @@ describe("Table", () => {
 
   it("should render empty table", () => {
     const wrapper = mount(<Table list={[]} />);
-    expect(wrapper.find(".table--empty").length).toBe(1);
+    expect(wrapper.find("tbody tr").length).toBe(0);
   });
 });
