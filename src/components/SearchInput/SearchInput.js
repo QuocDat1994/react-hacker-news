@@ -9,6 +9,7 @@ export default class SearchInput extends React.Component {
       <form className="SearchInput">
         <FontAwesomeIcon icon={faSearch} />
         <input
+          name="search"
           type="text"
           value={this.props.value}
           onChange={this.props.onChange}

@@ -15,7 +15,7 @@ export default class Table extends React.Component {
   };
 
   render() {
-    if (this.props.list.length === 0) {
+    if (Boolean(this.props.list)) {
       return <TableEmpty />;
     }
     return (
